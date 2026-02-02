@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6ea; /* Light pink background */
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 { color: #d63384; margin-bottom: 30px; }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #yesBtn { background-color: #ff4d6d; color: white; }
+
+        #noBtn {
+            background-color: #adb5bd;
+            color: white;
+            position: absolute; /* Needed for moving */
+        }
+
+        .hidden { display: none; }
+        
+        img { width: 200px; border-radius: 10px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainCard">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIyeGZia2ZqZzFpZzRndG94bmZ4eGZyeGZyeGZyeGZyeGZyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Cat">
+        <h1>Nirali, will you be my Valentine?</h1>
+        <div class="btn-container">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="successMessage">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZ0bmZ0bmZ0bmZ0bmZ0bmZ0bmZ0bmZ0bmZ0bmZ0bmZ0JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/K976V5qDqV3J6/giphy.gif" alt="Celebration">
+        <h1>YAY! See you soon! ❤️</h1>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainCard = document.getElementById('mainCard');
+        const successMessage = document.getElementById('successMessage');
+
+        // Make the "No" button move when hovered
+        noBtn.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        });
+
+        // Show success message on clicking "Yes"
+        yesBtn.addEventListener('click', () => {
+            mainCard.classList.add('hidden');
+            successMessage.classList.remove('hidden');
+            document.body.style.backgroundColor = "#ffb3c1"; // Brighter pink
+        });
+    </script>
+</body>
+</html>
