@@ -11,9 +11,9 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #ffe6ea; /* Light pink background */
+            background-color: #ffe6ea;
             font-family: 'Arial', sans-serif;
-            overflow: hidden;
+            overflow: hidden; /* Prevents scrollbars when button moves */
         }
 
         .container {
@@ -22,16 +22,19 @@
             padding: 50px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 1;
+            width: 80%;
+            max-width: 400px;
         }
 
-        h1 { color: #d63384; margin-bottom: 30px; }
+        h1 { color: #d63384; font-size: 24px; }
 
         .btn-container {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 20px;
+            margin-top: 20px;
+            height: 60px; /* Space for buttons */
         }
 
         button {
@@ -40,37 +43,37 @@
             border-radius: 10px;
             border: none;
             cursor: pointer;
-            transition: transform 0.2s;
         }
 
         #yesBtn { background-color: #ff4d6d; color: white; }
 
+        /* No button starts with static position, then switches to fixed */
         #noBtn {
             background-color: #adb5bd;
             color: white;
-            position: absolute; /* Needed for moving */
+            z-index: 999;
         }
 
         .hidden { display: none; }
-        
-        img { width: 200px; border-radius: 10px; margin-bottom: 20px; }
+        img { width: 180px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
     <div class="container" id="mainCard">
         <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIyeGZia2ZqZzFpZzRndG94bmZ4eGZyeGZyeGZyeGZyeGZyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Cat">
-        <h1>Nirali, will you be my Valentine?</h1>
+        <h1>Hey, will you be my Valentine?</h1>
         <div class="btn-container">
             <button id="yesBtn">Yes</button>
             <button id="noBtn">No</button>
         </div>
     </div>
 
-    <div class="container hidden" id="successMessage">
-        <img src="celeb.png" alt="Celebration">
-        <h1>YAY! See you soon! ❤️</h1>
-    </div>
+<div class="container hidden" id="successMessage">
+    <img src="celeb.png" alt="Celebration" id="successImage">
+    <h1>YAY! See you soon! ❤️</h1>
+</div>
+
 
     <script>
         const noBtn = document.getElementById('noBtn');
@@ -78,22 +81,31 @@
         const mainCard = document.getElementById('mainCard');
         const successMessage = document.getElementById('successMessage');
 
-        // Make the "No" button move when hovered
-        noBtn.addEventListener('mouseover', () => {
+        const moveButton = () => {
+            // Change position to fixed only once they hover
+            noBtn.style.position = 'fixed';
+            
+            // Calculate random positions
+            // Subtracting button width/height so it doesn't go off edge
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
+        };
+
+        // Move on hover (desktop) or touch (mobile)
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevents clicking on mobile
+            moveButton();
         });
 
-        // Show success message on clicking "Yes"
         yesBtn.addEventListener('click', () => {
             mainCard.classList.add('hidden');
             successMessage.classList.remove('hidden');
-            document.body.style.backgroundColor = "#ffb3c1"; // Brighter pink
+            document.body.style.backgroundColor = "#ffb3c1";
         });
     </script>
 </body>
-
 </html>
